@@ -5,6 +5,8 @@ module WPEWebKit
       @fds = Pointer(C::PollFD).null
       @count = 0_u64
       @timeout = 0
+      @request_read : Int32
+      @request_write : Int32
 
       def initialize
         pipe = uninitialized LibC::Int[2]
