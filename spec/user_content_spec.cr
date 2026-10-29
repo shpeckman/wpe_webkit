@@ -17,7 +17,7 @@ describe WPEWebKit::UserContentManager do
     manager.on_script_message_with_reply("echo") { |value, reply| reply.return_value({echo: value.to_i * 2}) }
     view = new_view(user_content_manager: manager)
     wait_for_load(view) { view.load_html("<p></p>") }
-    view.evaluate_javascript("window.webkit.messageHandlers.echo.postMessage(21).then(r => window.result = r.echo)")
+    view.evaluate_javascript("window.webkit.messageHandlers.echo.postMessage(21).then(r => window.result = r.echo); 0")
     iterate_until { view.evaluate_javascript("window.result").number? }.should be_true
     view.evaluate_javascript("window.result").to_i.should eq(42)
   end

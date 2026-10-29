@@ -35,7 +35,7 @@ module WPEWebKit
 
   class Toplevel < GObject
     def display : Display?
-      Display.from_raw?(C.wpe_toplevel_get_display(self))
+      Display.from_raw?(C.wpe_toplevel_get_display(self), owner: self)
     end
 
     def title=(title : String?)

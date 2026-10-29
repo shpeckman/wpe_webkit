@@ -2,8 +2,9 @@
 module WPEWebKit
   abstract class Wrapper
     getter to_unsafe : Void*
+    @owner : Wrapper?
 
-    def initialize(@to_unsafe : Void*, *, owned : Bool)
+    def initialize(@to_unsafe : Void*, *, owned : Bool, @owner : Wrapper? = nil)
       @to_unsafe = self.class.c_ref(@to_unsafe) unless owned || @to_unsafe.null?
     end
 
@@ -11,8 +12,16 @@ module WPEWebKit
       new(pointer, owned: false)
     end
 
+    def self.from_raw(pointer : Void*, *, owner : Wrapper) : self
+      new(pointer, owned: false, owner: owner)
+    end
+
     def self.from_raw?(pointer : Void*) : self?
       from_raw(pointer) unless pointer.null?
+    end
+
+    def self.from_raw?(pointer : Void*, *, owner : Wrapper) : self?
+      from_raw(pointer, owner: owner) unless pointer.null?
     end
 
     def self.take(pointer : Void*) : self

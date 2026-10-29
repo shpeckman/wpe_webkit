@@ -18,11 +18,11 @@ module WPEWebKit
     end
 
     def website_data_manager : WebsiteDataManager
-      WebsiteDataManager.from_raw(C.webkit_network_session_get_website_data_manager(self))
+      WebsiteDataManager.from_raw(C.webkit_network_session_get_website_data_manager(self), owner: self)
     end
 
     def cookie_manager : CookieManager
-      CookieManager.from_raw(C.webkit_network_session_get_cookie_manager(self))
+      CookieManager.from_raw(C.webkit_network_session_get_cookie_manager(self), owner: self)
     end
 
     def itp_enabled? : Bool

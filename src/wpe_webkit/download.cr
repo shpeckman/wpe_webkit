@@ -2,11 +2,11 @@
 module WPEWebKit
   class Download < GObject
     def request : URIRequest
-      URIRequest.from_raw(C.webkit_download_get_request(self))
+      URIRequest.from_raw(C.webkit_download_get_request(self), owner: self)
     end
 
     def response : URIResponse?
-      URIResponse.from_raw?(C.webkit_download_get_response(self))
+      URIResponse.from_raw?(C.webkit_download_get_response(self), owner: self)
     end
 
     def destination : String?

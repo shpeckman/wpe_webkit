@@ -13,12 +13,12 @@ module WPEWebKit
     end
 
     def display : Display?
-      Display.from_raw?(C.webkit_web_view_get_display(self))
+      Display.from_raw?(C.webkit_web_view_get_display(self), owner: self)
     end
 
     def toplevel : Toplevel?
       view = C.webkit_web_view_get_wpe_view(self)
-      Toplevel.from_raw?(C.wpe_view_get_toplevel(view)) unless view.null?
+      Toplevel.from_raw?(C.wpe_view_get_toplevel(view), owner: self) unless view.null?
     end
 
     def size : {Int32, Int32}
@@ -47,7 +47,7 @@ module WPEWebKit
     end
 
     def find_controller : FindController
-      FindController.from_raw(C.webkit_web_view_get_find_controller(self))
+      FindController.from_raw(C.webkit_web_view_get_find_controller(self), owner: self)
     end
 
     def load_uri(uri : String) : Nil

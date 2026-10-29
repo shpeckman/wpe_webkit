@@ -11,7 +11,7 @@ module WPEWebKit
     end
 
     def context : JSContext
-      JSContext.from_raw(C.jsc_value_get_context(self))
+      JSContext.from_raw(C.jsc_value_get_context(self), owner: self)
     end
 
     def undefined? : Bool

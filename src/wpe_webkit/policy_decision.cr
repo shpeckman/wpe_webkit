@@ -16,7 +16,7 @@ module WPEWebKit
     end
 
     def request : URIRequest
-      URIRequest.from_raw(C.webkit_navigation_action_get_request(self))
+      URIRequest.from_raw(C.webkit_navigation_action_get_request(self), owner: self)
     end
 
     def user_gesture? : Bool
@@ -57,7 +57,7 @@ module WPEWebKit
 
   class NavigationPolicyDecision < PolicyDecision
     def navigation_action : NavigationAction
-      NavigationAction.from_raw(C.webkit_navigation_policy_decision_get_navigation_action(self))
+      NavigationAction.from_raw(C.webkit_navigation_policy_decision_get_navigation_action(self), owner: self)
     end
 
     def request : URIRequest
@@ -67,11 +67,11 @@ module WPEWebKit
 
   class ResponsePolicyDecision < PolicyDecision
     def request : URIRequest
-      URIRequest.from_raw(C.webkit_response_policy_decision_get_request(self))
+      URIRequest.from_raw(C.webkit_response_policy_decision_get_request(self), owner: self)
     end
 
     def response : URIResponse
-      URIResponse.from_raw(C.webkit_response_policy_decision_get_response(self))
+      URIResponse.from_raw(C.webkit_response_policy_decision_get_response(self), owner: self)
     end
 
     def mime_type_supported? : Bool
