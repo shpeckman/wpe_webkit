@@ -57,7 +57,7 @@ describe WPEWebKit::WebView do
     count = nil
     view.find_controller.on_counted_matches { |matches| count = matches }
     view.find_controller.count_matches("apple", :case_insensitive)
-    iterate_until { count }.should be_true
+    iterate_until { !count.nil? }.should be_true
     count.should eq(3)
   end
 

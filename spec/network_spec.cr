@@ -21,7 +21,7 @@ describe WPEWebKit::WebContext do
     failure = nil
     view.on_load_failed { |_event, _uri, error| failure = error.message; true }
     view.load_uri("crystal://app/missing")
-    iterate_until { failure }.should be_true
+    iterate_until { !failure.nil? }.should be_true
     failure.should eq("not found")
   end
 end

@@ -8,7 +8,7 @@ describe WPEWebKit::UserContentManager do
     manager.on_script_message("bridge") { |value| received = value.as_json }
     view = new_view(user_content_manager: manager)
     wait_for_load(view) { view.load_html("<script>window.webkit.messageHandlers.bridge.postMessage({n: 7})</script>") }
-    iterate_until { received }.should be_true
+    iterate_until { !received.nil? }.should be_true
     received.should eq(JSON.parse(%({"n": 7})))
   end
 
