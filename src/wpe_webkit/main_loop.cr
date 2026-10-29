@@ -1,5 +1,11 @@
 # src/wpe_webkit/main_loop.cr
 module WPEWebKit
+  class WrongFiberError < Exception
+    def initialize
+      super("WPEWebKit must be driven from the main fiber")
+    end
+  end
+
   module MainLoop
     class Poller
       @fds = Pointer(C::PollFD).null
@@ -38,12 +44,11 @@ module WPEWebKit
       end
     end
 
-    @@fiber : Fiber? = nil
+    @@main = Fiber.current
     @@running = false
     @@acquired = false
     @@poller : Poller? = nil
     @@fds = Slice(C::PollFD).new(16, C::PollFD.new)
-    @@quit = Channel(Nil).new(1)
 
     class_property max_poll_interval : Time::Span = 10.milliseconds
 
@@ -55,44 +60,26 @@ module WPEWebKit
       @@running
     end
 
-    def self.current? : Bool
-      Fiber.current == @@fiber
+    def self.main_fiber? : Bool
+      Fiber.current == @@main
     end
 
-    def self.start : Nil
+    def self.run : Nil
       @@running = true
-      return if @@fiber
-      @@fiber = spawn(name: "wpe-webkit-main-loop") do
-        while @@running
-          iterate
-        end
-        @@fiber = nil
+      while @@running
+        iterate
       end
     end
 
-    def self.stop : Nil
+    def self.quit : Nil
       @@running = false
       C.g_main_context_wakeup(context)
     end
 
-    def self.run : Nil
-      start
-      @@quit.receive
-    end
-
-    def self.quit : Nil
-      stop
-      select
-      when @@quit.send(nil)
-      else
-      end
-    end
-
     def self.iterate : Nil
+      raise WrongFiberError.new unless main_fiber?
       ctx = context
-      unless @@acquired
-        @@acquired = C.g_main_context_acquire(ctx) != 0
-      end
+      @@acquired ||= C.g_main_context_acquire(ctx) != 0
       priority = 0
       C.g_main_context_prepare(ctx, pointerof(priority))
       timeout = 0

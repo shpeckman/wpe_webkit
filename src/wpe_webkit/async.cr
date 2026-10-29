@@ -14,7 +14,6 @@ module WPEWebKit
     class Pending(T) < Completion
       @outcome : T | ::Exception | Nil = nil
       @done = false
-      @signal = Channel(Nil).new(1)
 
       def initialize(&@finish : Void*, C::Error** -> T)
       end
@@ -27,18 +26,10 @@ module WPEWebKit
         @outcome = ex
       ensure
         @done = true
-        @signal.send(nil)
       end
 
       def wait : T
-        until @done
-          if MainLoop.current?
-            MainLoop.iterate
-          else
-            MainLoop.start
-            @signal.receive
-          end
-        end
+        MainLoop.iterate until @done
         outcome = @outcome
         raise outcome if outcome.is_a?(::Exception)
         outcome.as(T)
@@ -46,6 +37,7 @@ module WPEWebKit
     end
 
     def self.await(finish : Void*, C::Error** -> T, & : C::AsyncReadyCallback, Void* -> _) : T forall T
+      raise WrongFiberError.new unless MainLoop.main_fiber?
       pending = Pending(T).new(&finish)
       yield CALLBACK, Handles.retain(pending.as(Completion))
       pending.wait
