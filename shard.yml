@@ -1,0 +1,17 @@
+# shard.yml
+name: wpe_webkit
+version: 0.1.0
+
+authors:
+  - shpeckman <geelenrobin@proton.me>
+
+description: Crystal bindings for WPE WebKit 2.0 (WPE Platform API)
+
+crystal: '>= 1.22.0'
+
+libraries:
+  wpe-webkit-2.0: '>= 2.52'
+  wpe-platform-2.0: '>= 2.52'
+  libsoup-3.0: '*'
+
+license: MIT
