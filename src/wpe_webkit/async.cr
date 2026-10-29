@@ -29,7 +29,9 @@ module WPEWebKit
       end
 
       def wait : T
-        MainLoop.iterate until @done
+        until @done
+          MainLoop.iterate
+        end
         outcome = @outcome
         raise outcome if outcome.is_a?(::Exception)
         outcome.as(T)
