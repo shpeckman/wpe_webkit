@@ -16,9 +16,5 @@ module WPEWebKit
     def self.release(pointer : Void*) : Nil
       @@live.delete(pointer)
     end
-
-    def self.size : Int32
-      @@live.size
-    end
   end
 end
