@@ -89,7 +89,7 @@ module WPEWebKit
       def on_{{name.id}}_changed(&block : {{value_type}} -> Nil) : UInt64
         %callback = ->(instance : Void*, _spec : Void*, data : Void*) {
           begin
-            Box(Proc({{value_type}}, Nil)).unbox(data).call(GObject.read_property(instance, {{property}}, {{type}}))
+            Handles.get(data, Proc({{value_type}}, Nil)).call(GObject.read_property(instance, {{property}}, {{type}}))
           rescue ex
             ex.inspect_with_backtrace(STDERR)
           end
@@ -137,7 +137,7 @@ module WPEWebKit
       def on_{{name.id}}({% if detailed %}detail : String, {% end %}&block : {{types.splat}} -> {{block_return}}) : UInt64
         %callback = ->(instance : Void*, {{raws.splat}}{% unless raws.empty? %}, {% end %}data : Void*) {
           begin
-            %value = Box(Proc({{types.splat}}{% unless types.empty? %}, {% end %}{{block_return}})).unbox(data).call({{converts.splat}})
+            %value = Handles.get(data, Proc({{types.splat}}{% unless types.empty? %}, {% end %}{{block_return}})).call({{converts.splat}})
             {% if result == "Nil" %}
               nil
             {% elsif result == "Bool" %}

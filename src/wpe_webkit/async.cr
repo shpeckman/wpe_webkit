@@ -6,7 +6,7 @@ module WPEWebKit
     end
 
     CALLBACK = ->(_source : Void*, result : Void*, data : Void*) {
-      Box(Completion).unbox(data).complete(result)
+      Handles.get(data, Completion).complete(result)
       Handles.release(data)
       nil
     }

@@ -65,7 +65,7 @@ module WPEWebKit
   class WebContext < GObject
     URI_SCHEME = ->(request : Void*, data : Void*) {
       begin
-        Box(Proc(URISchemeRequest, Nil)).unbox(data).call(URISchemeRequest.from_raw(request))
+        Handles.get(data, Proc(URISchemeRequest, Nil)).call(URISchemeRequest.from_raw(request))
       rescue ex
         ex.inspect_with_backtrace(STDERR)
       end
