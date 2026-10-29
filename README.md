@@ -88,34 +88,34 @@ view = WPEWebKit::WebView.new(
 
 Every argument is optional.
 
-| Group | Methods |
-| --- | --- |
-| Loading | `load_uri`, `load_html(content, base_uri)`, `load_alternate_html`, `load_plain_text`, `load_bytes(data, mime_type, encoding, base_uri)`, `load_request(URIRequest)`, `reload`, `reload_bypass_cache`, `stop_loading` |
-| History | `go_back`, `go_forward`, `can_go_back?`, `can_go_forward?` |
-| State | `title`, `uri`, `loading?`, `estimated_load_progress`, `page_id`, `playing_audio?`, `web_process_responsive?`, `theme_color` |
-| Properties | `settings`, `settings=`, `zoom_level`, `zoom_level=`, `muted?`, `muted=`, `editable?`, `editable=`, `custom_charset`, `custom_charset=`, `background_color`, `background_color=`, `cors_allowlist=` |
-| JavaScript | `evaluate_javascript(script, world:, source_uri:) : JSValue` (raises `GLibError` on JS exceptions) |
-| Other | `snapshot(region, options) : Image`, `download(uri) : Download`, `execute_editing_command(command, argument)`, `can_show_mime_type?`, `find_controller`, `user_content_manager`, `network_session`, `web_context`, `display`, `toplevel`, `try_close`, `terminate_web_process` |
+| Group      | Methods                                                                                                                                                                                                                                                                        |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Loading    | `load_uri`, `load_html(content, base_uri)`, `load_alternate_html`, `load_plain_text`, `load_bytes(data, mime_type, encoding, base_uri)`, `load_request(URIRequest)`, `reload`, `reload_bypass_cache`, `stop_loading`                                                           |
+| History    | `go_back`, `go_forward`, `can_go_back?`, `can_go_forward?`                                                                                                                                                                                                                     |
+| State      | `title`, `uri`, `loading?`, `estimated_load_progress`, `page_id`, `playing_audio?`, `web_process_responsive?`, `theme_color`                                                                                                                                                   |
+| Properties | `settings`, `settings=`, `zoom_level`, `zoom_level=`, `muted?`, `muted=`, `editable?`, `editable=`, `custom_charset`, `custom_charset=`, `background_color`, `background_color=`, `cors_allowlist=`                                                                            |
+| JavaScript | `evaluate_javascript(script, world:, source_uri:) : JSValue` (raises `GLibError` on JS exceptions)                                                                                                                                                                             |
+| Other      | `snapshot(region, options) : Image`, `download(uri) : Download`, `execute_editing_command(command, argument)`, `can_show_mime_type?`, `find_controller`, `user_content_manager`, `network_session`, `web_context`, `display`, `toplevel`, `try_close`, `terminate_web_process` |
 
 #### Signals
 
 Every signal method returns a handler id, which you pass to `view.disconnect(id)`. Handlers whose return type is `Bool` must return `true` when they handled the event.
 
-| Method | Block |
-| --- | --- |
-| `on_load_changed` | `LoadEvent -> Nil` |
-| `on_load_failed` | `LoadEvent, String, GLibError -> Bool` |
-| `on_decide_policy` | `PolicyDecision, PolicyDecisionType -> Bool` |
-| `on_create` | `NavigationAction -> WebView?` (create the new view with `related_view:`) |
-| `on_ready_to_show`, `on_close` | `-> Nil` |
-| `on_script_dialog` | `ScriptDialog -> Bool` |
-| `on_permission_request` | `PermissionRequest -> Bool` |
-| `on_enter_fullscreen`, `on_leave_fullscreen` | `-> Bool` |
-| `on_insecure_content_detected` | `InsecureContentEvent -> Nil` |
-| `on_web_process_terminated` | `WebProcessTerminationReason -> Nil` |
-| `on_title_changed`, `on_uri_changed` | `String? -> Nil` |
-| `on_estimated_load_progress_changed` | `Float64 -> Nil` |
-| `on_loading_changed` | `Bool -> Nil` |
+| Method                                       | Block                                                                     |
+|----------------------------------------------|---------------------------------------------------------------------------|
+| `on_load_changed`                            | `LoadEvent -> Nil`                                                        |
+| `on_load_failed`                             | `LoadEvent, String, GLibError -> Bool`                                    |
+| `on_decide_policy`                           | `PolicyDecision, PolicyDecisionType -> Bool`                              |
+| `on_create`                                  | `NavigationAction -> WebView?` (create the new view with `related_view:`) |
+| `on_ready_to_show`, `on_close`               | `-> Nil`                                                                  |
+| `on_script_dialog`                           | `ScriptDialog -> Bool`                                                    |
+| `on_permission_request`                      | `PermissionRequest -> Bool`                                               |
+| `on_enter_fullscreen`, `on_leave_fullscreen` | `-> Bool`                                                                 |
+| `on_insecure_content_detected`               | `InsecureContentEvent -> Nil`                                             |
+| `on_web_process_terminated`                  | `WebProcessTerminationReason -> Nil`                                      |
+| `on_title_changed`, `on_uri_changed`         | `String? -> Nil`                                                          |
+| `on_estimated_load_progress_changed`         | `Float64 -> Nil`                                                          |
+| `on_loading_changed`                         | `Bool -> Nil`                                                             |
 
 ### Policy decisions
 
