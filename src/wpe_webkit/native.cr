@@ -43,7 +43,7 @@ module WPEWebKit
     def self.read_bytes(bytes : Void*) : Bytes
       size = LibC::SizeT.new(0)
       data = C.g_bytes_get_data(bytes, pointerof(size))
-      Bytes.new(size).tap { |copy| copy.copy_from(data.as(UInt8*), size) }
+      Bytes.new(size).tap(&.copy_from(data.as(::Pointer(UInt8)), size))
     end
   end
 end

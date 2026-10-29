@@ -12,7 +12,7 @@ module WPEWebKit
     }
 
     class Pending(T) < Completion
-      @outcome : T | ::Exception | Nil = nil
+      @outcome : T | ::Exception? = nil
       @done = false
 
       def initialize(&@finish : Void*, C::Error** -> T)

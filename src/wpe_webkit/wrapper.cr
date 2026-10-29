@@ -54,11 +54,11 @@ module WPEWebKit
 
     macro boxed(ref, unref)
       def self.c_ref(pointer : Void*) : Void*
-        C.{{ref.id}}(pointer)
+        C.{{ ref.id }}(pointer)
       end
 
       def self.c_unref(pointer : Void*) : Nil
-        C.{{unref.id}}(pointer)
+        C.{{ unref.id }}(pointer)
       end
     end
   end

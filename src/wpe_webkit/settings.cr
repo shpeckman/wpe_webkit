@@ -4,7 +4,7 @@ module WPEWebKit
     def self.new(**options : **T) : self forall T
       settings = take(C.webkit_settings_new)
       {% for key in T.keys %}
-        settings.{{key.id}} = options[{{key.symbolize}}]
+        settings.{{ key.id }} = options[{{ key.symbolize }}]
       {% end %}
       settings
     end
