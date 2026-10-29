@@ -4,7 +4,8 @@ module WPEWebKit
     boxed webkit_user_script_ref, webkit_user_script_unref
 
     def self.new(source : String, *, injected_frames : InjectedFrames = :all_frames, injection_time : InjectionTime = :document_end, world : String? = nil, allow_list : Enumerable(String)? = nil, block_list : Enumerable(String)? = nil) : self
-      take(C.webkit_user_script_new_for_world(source, injected_frames.value, injection_time.value, Native.string(world), Native.strv(allow_list), Native.strv(block_list)))
+      allow, block = Native.strv(allow_list), Native.strv(block_list)
+      take(world ? C.webkit_user_script_new_for_world(source, injected_frames.value, injection_time.value, world, allow, block) : C.webkit_user_script_new(source, injected_frames.value, injection_time.value, allow, block))
     end
   end
 
@@ -12,7 +13,8 @@ module WPEWebKit
     boxed webkit_user_style_sheet_ref, webkit_user_style_sheet_unref
 
     def self.new(source : String, *, injected_frames : InjectedFrames = :all_frames, level : StyleLevel = :user, world : String? = nil, allow_list : Enumerable(String)? = nil, block_list : Enumerable(String)? = nil) : self
-      take(C.webkit_user_style_sheet_new_for_world(source, injected_frames.value, level.value, Native.string(world), Native.strv(allow_list), Native.strv(block_list)))
+      allow, block = Native.strv(allow_list), Native.strv(block_list)
+      take(world ? C.webkit_user_style_sheet_new_for_world(source, injected_frames.value, level.value, world, allow, block) : C.webkit_user_style_sheet_new(source, injected_frames.value, level.value, allow, block))
     end
   end
 

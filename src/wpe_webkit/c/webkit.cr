@@ -193,9 +193,11 @@ module WPEWebKit
 
     fun webkit_user_style_sheet_ref(user_style_sheet : Void*) : Void*
     fun webkit_user_style_sheet_unref(user_style_sheet : Void*) : Void
+    fun webkit_user_style_sheet_new(source : UInt8*, injected_frames : Int32, level : Int32, allow_list : UInt8**, block_list : UInt8**) : Void*
     fun webkit_user_style_sheet_new_for_world(source : UInt8*, injected_frames : Int32, level : Int32, world_name : UInt8*, allow_list : UInt8**, block_list : UInt8**) : Void*
     fun webkit_user_script_ref(user_script : Void*) : Void*
     fun webkit_user_script_unref(user_script : Void*) : Void
+    fun webkit_user_script_new(source : UInt8*, injected_frames : Int32, injection_time : Int32, allow_list : UInt8**, block_list : UInt8**) : Void*
     fun webkit_user_script_new_for_world(source : UInt8*, injected_frames : Int32, injection_time : Int32, world_name : UInt8*, allow_list : UInt8**, block_list : UInt8**) : Void*
 
     fun webkit_download_get_request(download : Void*) : Void*
