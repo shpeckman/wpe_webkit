@@ -2,13 +2,13 @@
 module WPEWebKit
   class PermissionRequest < GObject
     KINDS = {
-      "WebKitGeolocationPermissionRequest"        => PermissionKind::Geolocation,
-      "WebKitNotificationPermissionRequest"       => PermissionKind::Notification,
-      "WebKitUserMediaPermissionRequest"          => PermissionKind::UserMedia,
-      "WebKitDeviceInfoPermissionRequest"         => PermissionKind::DeviceInfo,
-      "WebKitMediaKeySystemPermissionRequest"     => PermissionKind::MediaKeySystem,
-      "WebKitWebsiteDataAccessPermissionRequest"  => PermissionKind::WebsiteDataAccess,
-      "WebKitXRPermissionRequest"                 => PermissionKind::XR,
+      "WebKitGeolocationPermissionRequest"       => PermissionKind::Geolocation,
+      "WebKitNotificationPermissionRequest"      => PermissionKind::Notification,
+      "WebKitUserMediaPermissionRequest"         => PermissionKind::UserMedia,
+      "WebKitDeviceInfoPermissionRequest"        => PermissionKind::DeviceInfo,
+      "WebKitMediaKeySystemPermissionRequest"    => PermissionKind::MediaKeySystem,
+      "WebKitWebsiteDataAccessPermissionRequest" => PermissionKind::WebsiteDataAccess,
+      "WebKitXRPermissionRequest"                => PermissionKind::XR,
     }
 
     def kind : PermissionKind
